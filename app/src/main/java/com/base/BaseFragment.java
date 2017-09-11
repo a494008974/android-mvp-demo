@@ -11,18 +11,18 @@ import com.base.util.TUtil;
 import com.view.layout.TRecyclerView;
 
 
-public class BaseListFragment extends Fragment {
+public class BaseFragment extends Fragment {
     private TRecyclerView mXRecyclerView;
 
     /**
      * @param vh 传入VH的类名
      * @return
      */
-    public static BaseListFragment newInstance(Class<? extends BaseViewHolder> vh,String type) {
+    public static BaseFragment newInstance(Class<? extends BaseViewHolder> vh, String type) {
         Bundle arguments = new Bundle();
         arguments.putString(C.VH_CLASS, vh.getCanonicalName());
         arguments.putString("type",type);
-        BaseListFragment fragment = new BaseListFragment();
+        BaseFragment fragment = new BaseFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
