@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.base.BaseActivity;
@@ -38,12 +37,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
     @Override
     public void initView() {
         fab.setOnClickListener(v -> {
+            mPresenter.test();
             String name = tlName.getEditText().getText().toString();
             String pass = tlPass.getEditText().getText().toString();
-            String msg = TextUtils.isEmpty(name) ? "用户名不能为空!" : TextUtils.isEmpty(pass) ? "密码不能为空!" : "";
-            if (!TextUtils.isEmpty(msg)) showMsg(msg);
-            else if (isLogin) mPresenter.login(name, pass);
-            else mPresenter.sign(name, pass);
+//            String msg = TextUtils.isEmpty(name) ? "用户名不能为空!" : TextUtils.isEmpty(pass) ? "密码不能为空!" : "";
+//            if (!TextUtils.isEmpty(msg)) showMsg(msg);
+//            else if (isLogin) mPresenter.login(name, pass);
+//            else mPresenter.sign(name, pass);
         });
         tv_sign.setOnClickListener(v -> swich());
     }

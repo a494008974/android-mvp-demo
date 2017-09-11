@@ -4,6 +4,8 @@ import com.base.BaseModel;
 import com.base.BasePresenter;
 import com.base.BaseView;
 import com.data.CreatedResult;
+import com.data.Data;
+import com.data.entity.StreamInfo;
 import com.data.entity._User;
 
 import rx.Observable;
@@ -15,6 +17,9 @@ public interface LoginContract {
     interface Model extends BaseModel {
         Observable<_User> login(String name, String pass);
         Observable<CreatedResult> sign(String name, String pass);
+
+        Observable<Data<StreamInfo>> getStreamList(int skip, int limit);
+
     }
 
     interface View extends BaseView {
@@ -26,6 +31,8 @@ public interface LoginContract {
     abstract class Presenter extends BasePresenter<Model, View> {
         public abstract void login(String name, String pass);
         public abstract void sign(String name, String pass);
+
+        public abstract void test();
         @Override
         public void onStart() {}
     }

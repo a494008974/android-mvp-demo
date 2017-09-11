@@ -26,16 +26,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by baixiaokang on 16/3/9.
  */
-public class Api {
+public class LZApi {
 
-    public static final String X_LC_Id = "i7j2k7bm26g7csk7uuegxlvfyw79gkk4p200geei8jmaevmx";
-    public static final String X_LC_Key = "n6elpebcs84yjeaj5ht7x0eii9z83iea8bec9szerejj7zy3";
+    public static final String X_LC_Id = "5jX830BXHMuiE6veD1SunweL-gzGzoHsz";
+    public static final String X_LC_Key = "6VCQL9UDEmPTpJJyhskEdiiG";
     public static final String BASE_URL = "https://leancloud.cn:443/1.1/";
 
     public static final int DEFAULT_TIMEOUT = 5;
 
     public Retrofit retrofit;
-    public ApiService movieService;
+    public LZApiService remoteService;
 
     Interceptor mInterceptor = (chain) -> chain.proceed(chain.request().newBuilder()
             .addHeader("X-LC-Id", X_LC_Id)
@@ -45,7 +45,7 @@ public class Api {
 
 
     //构造方法私有
-    private Api() {
+    private LZApi() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -70,16 +70,16 @@ public class Api {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
-        movieService = retrofit.create(ApiService.class);
+        remoteService = retrofit.create(LZApiService.class);
     }
 
     //在访问HttpMethods时创建单例
     private static class SingletonHolder {
-        private static final Api INSTANCE = new Api();
+        private static final LZApi INSTANCE = new LZApi();
     }
 
     //获取单例
-    public static Api getInstance() {
+    public static LZApi getInstance() {
         return SingletonHolder.INSTANCE;
     }
 

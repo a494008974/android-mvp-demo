@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.C;
 import com.base.BaseActivity;
-import com.base.BaseListFragment;
+import com.base.BaseFragment;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
@@ -31,9 +31,7 @@ import com.base.util.helper.FragmentAdapter;
 import com.data.entity._User;
 import com.ui.article.ArticleActivity;
 import com.ui.login.LoginActivity;
-import com.ui.main.AboutActivity;
 import com.ui.main.R;
-import com.ui.main.SettingsActivity;
 import com.ui.user.UserActivity;
 import com.view.viewholder.ArticleItemVH;
 
@@ -63,7 +61,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_home;
     }
 
 
@@ -84,8 +82,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings)
-            startActivity(new Intent(mContext, AboutActivity.class));
+        if (item.getItemId() == R.id.action_settings){}
         else if (item.getItemId() == android.R.id.home)
             dlMainDrawer.openDrawer(GravityCompat.START);
         return super.onOptionsItemSelected(item);
@@ -110,7 +107,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
             dlMainDrawer.closeDrawers();
             switch (item.getItemId()) {
                 case R.id.nav_manage:
-                    startActivity(new Intent(mContext, SettingsActivity.class));
                     break;
                 case R.id.nav_share:
                     startActivity(new Intent(mContext, LoginActivity.class));
@@ -131,7 +127,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
     @Override
     public void showTabList(String[] mTabs) {
         List<Fragment> fragments = new ArrayList<>();
-        Observable.from(mTabs).subscribe(tab -> fragments.add(BaseListFragment.newInstance(ArticleItemVH.class, tab)));
+        Observable.from(mTabs).subscribe(tab -> fragments.add(BaseFragment.newInstance(ArticleItemVH.class, tab)));
         viewpager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragments, Arrays.asList(mTabs)));
         tabs.setupWithViewPager(viewpager);
         tabs.setTabsFromPagerAdapter(viewpager.getAdapter());

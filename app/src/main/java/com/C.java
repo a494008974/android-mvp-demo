@@ -23,4 +23,6 @@ public class C {
     public static final String TAG_EDITABLE = "editable";
     public static final String TAG_HEADDATA = "with_headdata";
 
+
+    public static String SPLASH_PATH;
 }
