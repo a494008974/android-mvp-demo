@@ -27,7 +27,6 @@ public class MoreActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        ListView listView;
         mDatas = new ArrayList<String>();
         for (int i = 'A'; i < 'z'; i++)
         {
