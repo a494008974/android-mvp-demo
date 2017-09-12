@@ -1,25 +1,26 @@
 package com.ui.main;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.base.BaseActivity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.base.util.AnimationUtil;
+import com.view.widget.ContentView;
 
 import butterknife.Bind;
 
-public class MainActivity extends BaseActivity<MainPresenter,MainModel> implements MainContract.View{
+public class MainActivity extends BaseActivity<MainPresenter,MainModel> implements MainContract.View, View.OnFocusChangeListener,View.OnKeyListener,View.OnClickListener{
 
-    @Bind(R.id.recyclerview)
-    RecyclerView mRecyclerView;
+    @Bind(R.id.main_content)
+    RelativeLayout mainContent;
 
-    private List<String> mDatas;
+    @Bind(R.id.focus)
+    ImageView focus;
+
+    private boolean animType;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -27,55 +28,14 @@ public class MainActivity extends BaseActivity<MainPresenter,MainModel> implemen
 
     @Override
     public void initView() {
-
-
-        mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
-            mDatas.add("" + (char) i);
+        if(mainContent != null){
+            for(int i=0; i<mainContent.getChildCount(); i++){
+                ContentView mContentView = (ContentView) mainContent.getChildAt(i);
+                mContentView.setOnKeyListener(this);
+                mContentView.setOnFocusChangeListener(this);
+                mContentView.setOnClickListener(this);
+            }
         }
-
-        MainAdapter adapter = new MainAdapter();
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,5));
-
-        mRecyclerView.setAdapter(adapter);
-
-//        Intent intent = new Intent();
-//        intent.setAction("com.starcor.hunan.mgtv");
-//        startActivity(intent);
-
-//        Intent intent = new Intent();
-//        intent.setAction("com.starcor.hunan.mgtv");
-//        intent.putExtra("cmd_ex", "mgtv_jump");
-//        intent.putExtra("action_source_id", "xxxx");
-//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-//        sendBroadcast(intent);
-
-//分类接口
-//        Intent intent = new Intent();
-//        intent.setAction("com.hunantv.license");
-//        intent.putExtra("cmd_ex", "show_filmlibrary");
-//        intent.putExtra("pageType", "1");
-//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-//        sendBroadcast(intent);
-//        综艺 pageType 1
-//        电视剧 pageType 2
-//        电影 pageType 3
-//        教育 pageType 115
-
-
-//        Intent intent = new Intent();
-//        intent.setAction("com.hunantv.license");
-//        intent.putExtra("cmd_ex", "mgtv_jump");
-//        intent.putExtra("jumpKind", "1");
-//        intent.putExtra("jumpId", "51294");
-////        intent.putExtra("playpartId", "4096654");
-//        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-//        sendBroadcast(intent);
-//
-//          System.out.println(intent.toUri(0));
-//        this.finish();
-//        return;
     }
 
     @Override
@@ -89,32 +49,34 @@ public class MainActivity extends BaseActivity<MainPresenter,MainModel> implemen
 
     }
 
+    @Override
+    public void onClick(View v) {
+        System.out.println("onClick ==> "+v.getId());
+    }
 
-    public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            MainViewHolder holder = new MainViewHolder(LayoutInflater.from(MainActivity.this).inflate(R.layout.main_recycler_item, parent,false));
-            return holder;
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(hasFocus){
+            focus.setVisibility(View.VISIBLE);
+            focus.bringToFront();
+            AnimationUtil.moveFocus(v,focus,animType);
+            animType = true;
+        }else{
+            AnimationUtil.cancleFocus(v,animType);
         }
+    }
 
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            MainViewHolder mainViewHolder = (MainViewHolder)holder;
-            mainViewHolder.id_num.setText(mDatas.get(position));
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        animType = false;
+    }
 
-        @Override
-        public int getItemCount() {
-            return mDatas.size();
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if(event.getAction() == KeyEvent.ACTION_DOWN){
+            System.out.println("KeyEvent.ACTION_DOWN ==> "+v.getId());
         }
-
-        public class MainViewHolder extends RecyclerView.ViewHolder{
-            TextView id_num;
-            public MainViewHolder(View view) {
-                super(view);
-                id_num = (TextView) view.findViewById(R.id.id_num);
-            }
-        }
+        return false;
     }
 }

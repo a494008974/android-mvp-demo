@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ui.main.MoreActivity">
+    <GridView
+        android:id="@+id/grid_view"
+        android:scrollbars="none"
+        android:drawSelectorOnTop="true"
+        android:numColumns="5"
+        android:gravity="center"
+        android:listSelector="@drawable/focus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-21dp"
+        android:layout_marginLeft="-22dp"
+        android:layout_marginRight="-22dp"
+        android:layout_marginBottom="-21dp">
+    </GridView>
+</RelativeLayout>
